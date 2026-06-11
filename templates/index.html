@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Systems Tower Demo</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Inter,Arial,sans-serif;background:#f7f8fb;color:#111827;line-height:1.5}
+    a{text-decoration:none;color:inherit}
+    header{position:sticky;top:0;z-index:20;background:rgba(247,248,251,.9);backdrop-filter:blur(14px);border-bottom:1px solid #e5e7eb}
+    .nav{max-width:1180px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{font-weight:900;font-size:18px;letter-spacing:.2px}
+    .brand span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:1.8px;color:#6b7280;margin-top:2px}
+    nav{display:flex;gap:18px;font-size:14px;color:#374151}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:8px;padding:12px 18px;background:#111827;color:white;font-weight:800;border:1px solid #111827;transition:.2s}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(17,24,39,.15)}
+    .btn.secondary{background:white;color:#111827}
+    .hero{min-height:86vh;display:grid;align-items:center;background:linear-gradient(135deg,#111827,#234152 52%,#facc15 52%,#e7b90d);color:white}
+    .hero-inner{max-width:1180px;width:100%;margin:0 auto;padding:86px 24px;display:grid;grid-template-columns:1.08fr .92fr;gap:42px;align-items:center}
+    .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:2px;font-weight:900;color:#facc15;margin-bottom:16px}
+    h1{font-family:Georgia,serif;font-size:clamp(44px,7vw,82px);line-height:.98;font-weight:400;max-width:800px}
+    .hero p{font-size:18px;color:#e5e7eb;max-width:620px;margin:24px 0 30px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .hero-card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);border-radius:8px;padding:26px;backdrop-filter:blur(18px)}
+    .hero-card h2{font-size:20px;margin-bottom:18px}
+    .stack{display:grid;gap:12px}
+    .stack div{background:rgba(255,255,255,.12);border-radius:8px;padding:16px}
+    .stack strong{display:block;font-size:18px;margin-bottom:4px}
+    .stack span{color:#d1d5db;font-size:14px}
+    section{padding:84px 24px}
+    .wrap{max-width:1180px;margin:0 auto}
+    .section-head{display:flex;justify-content:space-between;gap:28px;align-items:end;margin-bottom:34px}
+    .section-head h2{font-family:Georgia,serif;font-size:clamp(34px,4vw,56px);line-height:1;font-weight:400;max-width:760px}
+    .section-head p{max-width:440px;color:#4b5563}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .card{background:white;border:1px solid #e5e7eb;border-radius:8px;padding:24px;box-shadow:0 18px 40px rgba(17,24,39,.06)}
+    .card h3{font-size:21px;margin-bottom:10px}
+    .card p,.card li{color:#4b5563}
+    .card ul{padding-left:18px;margin-top:10px}
+    .band{background:#111827;color:white}
+    .band .section-head p,.band .card p,.band .card li{color:#d1d5db}
+    .band .card{background:#1f2937;border-color:#374151}
+    .label{display:inline-block;background:#facc15;color:#111827;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:900;margin-bottom:14px}
+    .process{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .step{background:white;border:1px solid #e5e7eb;border-radius:8px;padding:18px}
+    .step strong{display:block;font-size:18px;margin-bottom:6px}
+    .contact{display:grid;grid-template-columns:.95fr 1.05fr;gap:28px;align-items:start}
+    form{background:white;border:1px solid #e5e7eb;border-radius:8px;padding:24px;box-shadow:0 18px 40px rgba(17,24,39,.06)}
+    label{display:block;font-size:13px;font-weight:900;margin-bottom:7px;color:#374151}
+    input,textarea,select{width:100%;border:1px solid #d1d5db;border-radius:8px;padding:13px 14px;font:inherit;margin-bottom:14px;background:white}
+    textarea{min-height:120px;resize:vertical}
+    footer{padding:34px 24px;background:#0b1020;color:#cbd5e1}
+    .footer-inner{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    @media(max-width:920px){
+      nav{display:none}
+      .hero{background:linear-gradient(135deg,#111827,#234152)}
+      .hero-inner,.contact{grid-template-columns:1fr}
+      .section-head{display:block}
+      .section-head p{margin-top:14px}
+      .grid-3,.grid-2,.process{grid-template-columns:1fr}
+    }
+    @media(max-width:560px){
+      .nav,section{padding-left:16px;padding-right:16px}
+      .hero-inner{padding:70px 16px}
+      .btn{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="#inicio">Systems Tower<span>Software y automatizacion</span></a>
+      <nav>
+        <a href="#servicios">Servicios</a>
+        <a href="#inmobiliario">Sistema Web</a>
+        <a href="#crm">CRM</a>
+        <a href="#apps">Apps</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <a class="btn" href="#contacto">Solicitar propuesta</a>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow">Systems Tower Demo</div>
+          <h1>Landing comercial para vender sistemas, automatizaciones y apps.</h1>
+          <p>Presentacion independiente para Systems Tower, lista para desplegar en un Railway separado y mostrar servicios digitales a futuros clientes.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#servicios">Ver servicios</a>
+            <a class="btn secondary" href="#contacto">Contactar</a>
+          </div>
+        </div>
+        <aside class="hero-card">
+          <h2>Soluciones principales</h2>
+          <div class="stack">
+            <div><strong>Sistema Web Inmobiliario</strong><span>Web, captura de interesados y seguimiento comercial.</span></div>
+            <div><strong>CRM</strong><span>Orden para contactos, estados y oportunidades.</span></div>
+            <div><strong>Automatizacion WhatsApp</strong><span>Flujos de atencion y respuestas conectadas al negocio.</span></div>
+            <div><strong>Desarrollo de Apps</strong><span>Aplicaciones a medida para procesos internos y clientes.</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="servicios">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Servicios para empresas que quieren vender y operar mejor.</h2>
+          <p>Systems Tower diseña herramientas digitales enfocadas en captacion, automatizacion y gestion comercial.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <span class="label">Web</span>
+            <h3>Landing y sistemas web</h3>
+            <p>Paginas comerciales, paneles internos y experiencias web preparadas para captar clientes.</p>
+          </article>
+          <article class="card">
+            <span class="label">CRM</span>
+            <h3>Gestion de contactos</h3>
+            <p>Organizacion de interesados, estados comerciales y seguimiento de oportunidades.</p>
+          </article>
+          <article class="card">
+            <span class="label">Automatizacion</span>
+            <h3>Flujos conectados</h3>
+            <p>Automatizaciones para reducir tareas repetitivas y mejorar velocidad de respuesta.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="inmobiliario">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Sistema Web Inmobiliario.</h2>
+          <p>Una solucion comercial para inmobiliarias que necesitan publicar propiedades, recibir interesados y dar seguimiento.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Captacion desde la web</h3>
+            <p>La web presenta propiedades y convierte consultas en contactos utiles para el equipo comercial.</p>
+            <ul>
+              <li>Portadas profesionales para propiedades.</li>
+              <li>Formularios de consulta.</li>
+              <li>Botones de contacto rapido.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Base de interesados</h3>
+            <p>Los datos de cada contacto se preparan para seguimiento, medicion y continuidad comercial.</p>
+            <ul>
+              <li>Nombre, telefono, email y mensaje.</li>
+              <li>Propiedad consultada.</li>
+              <li>Estado comercial del interesado.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="crm">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>CRM para seguimiento comercial.</h2>
+          <p>Una vista simple para que el equipo sepa que hacer con cada contacto y no pierda oportunidades.</p>
+        </div>
+        <div class="process">
+          <div class="step"><strong>Nuevo</strong><p>Consulta recibida.</p></div>
+          <div class="step"><strong>Contactado</strong><p>Primer contacto realizado.</p></div>
+          <div class="step"><strong>Visita agendada</strong><p>Reunion o visita coordinada.</p></div>
+          <div class="step"><strong>Cerrado</strong><p>Operacion finalizada.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="whatsapp">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Automatizacion WhatsApp.</h2>
+          <p>Flujos para responder consultas, ordenar conversaciones y conectar el canal de mayor uso con la gestion comercial.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Atencion inicial</h3>
+            <p>Respuestas rapidas para orientar al interesado y pedir los datos necesarios.</p>
+          </article>
+          <article class="card">
+            <h3>Calificacion</h3>
+            <p>Identificacion de consultas con mayor intencion comercial.</p>
+          </article>
+          <article class="card">
+            <h3>Continuidad</h3>
+            <p>Derivacion al equipo humano cuando el contacto necesita avanzar.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="apps">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Desarrollo de Apps.</h2>
+          <p>Aplicaciones a medida para empresas que necesitan digitalizar procesos especificos.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Apps internas</h3>
+            <p>Herramientas para equipos, operaciones, reportes y control de tareas.</p>
+          </article>
+          <article class="card">
+            <h3>Apps comerciales</h3>
+            <p>Experiencias para captar clientes, mostrar servicios y recibir solicitudes.</p>
+          </article>
+          <article class="card">
+            <h3>Integraciones</h3>
+            <p>Conexion entre formularios, planillas, CRM, email y canales de comunicacion.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="band">
+      <div class="wrap contact">
+        <div>
+          <div class="eyebrow">Contacto</div>
+          <h2>Solicita una propuesta para tu negocio.</h2>
+          <p style="color:#d1d5db;margin-top:18px;max-width:520px">Contanos que necesitas: sistema web, CRM, automatizacion WhatsApp, app a medida o una combinacion de soluciones.</p>
+        </div>
+        <form>
+          <label for="nombre">Nombre</label>
+          <input id="nombre" name="nombre" type="text" placeholder="Nombre y apellido">
+
+          <label for="empresa">Empresa</label>
+          <input id="empresa" name="empresa" type="text" placeholder="Nombre de la empresa">
+
+          <label for="servicio">Servicio de interes</label>
+          <select id="servicio" name="servicio">
+            <option>Sistema Web Inmobiliario</option>
+            <option>CRM</option>
+            <option>Automatizacion WhatsApp</option>
+            <option>Desarrollo de Apps</option>
+          </select>
+
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" placeholder="Contanos brevemente que queres construir."></textarea>
+
+          <a class="btn" href="mailto:contacto@systemstower.com?subject=Consulta%20Systems%20Tower%20Demo">Enviar consulta</a>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <strong>Systems Tower Demo</strong>
+      <span>Landing independiente preparada para Railway</span>
+    </div>
+  </footer>
+</body>
+</html>
